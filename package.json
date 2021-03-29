@@ -13,6 +13,7 @@
   "author": "wjuniorw",
   "license": "ISC",
   "devDependencies": {
+    "nodemon": "^2.0.7",
     "parcel-bundler": "^1.12.5",
     "typescript": "^4.2.3"
   },
@@ -21,7 +22,6 @@
     "@graphql-tools/merge": "^6.2.11",
     "apollo-server": "^2.22.1",
     "dotenv": "^8.2.0",
-    "graphql": "^15.5.0",
-    "nodemon": "^2.0.7"
+    "graphql": "^15.5.0"
   }
 }
