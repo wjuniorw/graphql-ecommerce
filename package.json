@@ -27,6 +27,7 @@
     "apollo-server": "^2.22.1",
     "dotenv": "^8.2.0",
     "graphql": "^15.5.0",
+    "jose": "^3.11.1",
     "mongoose": "^5.12.2",
     "mongoose-paginate": "^5.0.3"
   }
