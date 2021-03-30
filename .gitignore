@@ -5,5 +5,5 @@ dist
 build
 *.lock
 .cache
+data
 package-lock.json
-*.yaml
