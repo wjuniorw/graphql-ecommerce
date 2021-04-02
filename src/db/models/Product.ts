@@ -1,5 +1,5 @@
 import mongoose from '../connections'
-import Paginate from 'mongoose-paginate'
+import Paginate from 'mongoose-paginate-v2'
 
 const { Schema } = mongoose
 const ProductSchema = new Schema({
