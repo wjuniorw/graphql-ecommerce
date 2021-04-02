@@ -7,19 +7,17 @@ const User = gql`
     email: String
     role: String
     password: String
-    orders: [ID]
   }
 
   type Query {
-    # users: [User] @hasRole(roles: ["ADMIN"])
-    users: [User]
-    user(id: ID): User
+    users: [User] @hasRole(roles: ["ADMIN"])
+    user(id: ID): User @hasRole(roles: ["ADMIN", "MANAGER"])
   }
 
   type Mutation {
-    userRegister(data: UserInput): User
-    userUpdate(id:ID data: UserInput): User
-    userDelete(id:ID): UserDelResp
+    userRegister(data: UserInput): User @hasRole(roles: ["ADMIN"])
+    userUpdate(id:ID data: UserInput): User @hasRole(roles: ["ADMIN", "MANAGER"])
+    userDelete(id:ID): UserDelResp @hasRole(roles: ["ADMIN"])
   }
 
   input UserInput {

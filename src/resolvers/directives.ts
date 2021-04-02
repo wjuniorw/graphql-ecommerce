@@ -9,23 +9,23 @@ const directiveResolvers: any = {
     console.log('<====src====>', src)
     const pattern = new RegExp(roles[0], 'i')
     const hasPermission = context.user.role?.match(pattern)
-    if(!hasPermission) {
-      throw new Error('Permissao negada!')
-    }
+    // if(!hasPermission) {
+    //   throw new Error('Permissao negada!')
+    // }
     return next()
   },
-  fieldRole(
+  sensibleField(
     next: any,
     src: any,
-    { roles },
+    { role },
     context: any,
   ) {
-    const pattern = new RegExp(roles[0], 'i')
+    const pattern = new RegExp(role, 'i')
     const hasPermission = context.user.role?.match(pattern)
     if(!hasPermission) {
       return next().then((param: any) => {
-        console.log('<=====oq temos aqui?=====>', param)
-        return 'Informação sensivel'
+        // return blurryString(param)
+        return null
       })
     }
     return next()

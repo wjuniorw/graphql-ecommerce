@@ -2,7 +2,13 @@ import { jwtVerify } from 'jose/jwt/verify'
 import { parseJwk } from 'jose/jwk/parse'
 import { SignJWT, KeyLike } from 'jose/jwt/sign'
 
-import { User } from '~/db'
+import db from '~/db'
+
+const {
+  D_KEY,
+  X_KEY,
+  Y_KEY,
+} = process.env
 
 export const getUser = async(token: string) => {
   try {
@@ -12,7 +18,7 @@ export const getUser = async(token: string) => {
     const { payload } = await verifyToken(token, publicKey)
 
     if(payload) {
-      const user = await User.findById(payload.id)
+      const user = await db.User.findById(payload.id)
       return user
     }
   }
@@ -26,9 +32,9 @@ export const generatePrivate = async() => {
     alg: 'ES256',
     crv: 'P-256',
     kty: 'EC',
-    d: 'VhsfgSRKcvHCGpLyygMbO_YpXc7bVKwi12KQTE4yOR4',
-    x: 'ySK38C1jBdLwDsNWKzzBHqKYEE5Cgv-qjWvorUXk9fw',
-    y: '_LeQBw07cf5t57Iavn4j-BqJsAD1dpoz8gokd3sBsOo'
+    d: D_KEY,
+    x: X_KEY,
+    y: Y_KEY,
   })
 
   return privateKey
@@ -39,18 +45,18 @@ export const generatePublic = async() => {
     alg: 'ES256',
     crv: 'P-256',
     kty: 'EC',
-    x: 'ySK38C1jBdLwDsNWKzzBHqKYEE5Cgv-qjWvorUXk9fw',
-    y: '_LeQBw07cf5t57Iavn4j-BqJsAD1dpoz8gokd3sBsOo'
+    x: X_KEY,
+    y: Y_KEY,
   })
 
   return publicKey
 }
 
 export const generateToken = async(privateKey: KeyLike) => {
-  const jwt = await new SignJWT({ 'urn:example:claim': true })
+  const jwt = await new SignJWT({ 'urn:ecommerce:claim': true })
   .setProtectedHeader({ alg: 'ES256' })
-  .setIssuedAt().setIssuer('urn:example:issuer')
-  .setAudience('urn:example:audience').setExpirationTime('2h')
+  .setIssuedAt().setIssuer('urn:ecommerce:issuer')
+  .setAudience('urn:ecommerce:audience').setExpirationTime('2h')
   .sign(privateKey)
   console.log(jwt)
   return jwt
@@ -59,8 +65,8 @@ export const generateToken = async(privateKey: KeyLike) => {
 export const verifyToken = async(jwt: string, publicKey: KeyLike) => {
   try {
     const { payload, protectedHeader } = await jwtVerify(jwt, publicKey, {
-      issuer: 'urn:example:issuer',
-      audience: 'urn:example:audience'
+      issuer: 'urn:ecommerce:issuer',
+      audience: 'urn:ecommerce:audience'
     })
     return { payload }
   }

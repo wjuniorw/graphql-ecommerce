@@ -2,7 +2,7 @@ import { gql } from 'apollo-server'
 
 const Product = gql`
   type Product {
-    id: ID
+    id: ID @sensibleField(role: "ADMIN")
     name: String
     price: Float
     inStok: Int
@@ -16,15 +16,14 @@ const Product = gql`
   }
 
   type Query {
-    # products: [Product] @hasRole(roles: ["ADMIN"])
     products: [Product]
     product(id: ID): Product
   }
 
   type Mutation {
-    product(data: ProductInput): Product @hasRole(roles: ["ADMIN"])
+    product(data: ProductInput): Product @hasRole(roles: ["ADMIN", "MANAGER"])
     productUpdate(id:ID data: ProductInput): Product
-    productDelete(id:ID): ProductDelResp
+    productDelete(id:ID): ProductDelResp @hasRole(roles: ["ADMIN", "MANAGER"])
   }
 
   input ProductInput {
