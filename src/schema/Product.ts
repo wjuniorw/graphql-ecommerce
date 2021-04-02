@@ -12,16 +12,17 @@ const Product = gql`
     thumb: String
     category: String
     images: [String]
-    pretty_price: String
+    pretty_price: String @brCurrency
   }
 
   type Query {
+    # products: [Product] @hasRole(roles: ["ADMIN"])
     products: [Product]
     product(id: ID): Product
   }
 
   type Mutation {
-    product(data: ProductInput): Product
+    product(data: ProductInput): Product @hasRole(roles: ["ADMIN"])
     productUpdate(id:ID data: ProductInput): Product
     productDelete(id:ID): ProductDelResp
   }
@@ -38,6 +39,13 @@ const Product = gql`
     images: [String]
     pretty_price: String
   }
+
+  type ProductsResponse {
+    ok: Boolean
+    message: String
+    data: [Product]
+  }
+
   type ProductDelResp {
     ok: Boolean
     error: String
