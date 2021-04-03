@@ -1,4 +1,4 @@
-require('dotenv').config()
+// require('dotenv').config()
 import { ApolloServer } from 'apollo-server'
 import { makeExecutableSchema } from '@graphql-tools/schema'
 // import { mockServer } from 'graphql-tools'
@@ -10,7 +10,7 @@ import directiveResolvers from '~/resolvers/directives'
 
 import { getUser } from '~/utils/auth'
 
-const context = async({ req }) => {
+const context = async ({ req }) => {
   const token = req.headers.authorization || ''
   const user = await getUser(token)
   return { db, user, req }
