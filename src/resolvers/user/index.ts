@@ -1,27 +1,15 @@
-import bcrypt from 'bcrypt'
-
-const hashingPass = async(pass: string) => {
-  try {
-    const hash = await bcrypt.hash(pass, 11)
-    console.log('hashingPass=====>', hash)
-    return hash
-  }
-  catch (e) {
-    console.log('error hashingPass=====>', e.message)
-  }
-}
+import { createUser } from './helpers'
 
 const productResolvers = {
   Query: {
-    user: (_, { id }, { db: { User }}) => User.findById(id),
-    users: (_, args: any, { db: { User }}) => User.find(args),
+    user: (_: any, { id }, { db: { User } }) => User.findById(id),
+    users: (_: any, args: any, { db: { User } }) => User.find(args),
   },
   Mutation: {
-    userRegister: async(_, { data }, { db: { User }}) => {
-      data.password = await hashingPass(data.password)
-      return User.create(data)
+    userRegister: async (_: any, { data }, { db: { User } }) => {
+      return createUser(data, User)
     },
-    userUpdate: (_, { id, data }, { db: { User }}) => {
+    userUpdate: (_: any, { id, data }, { db: { User } }) => {
       return User.findByIdAndUpdate(id, data, { new: true })
     },
   },

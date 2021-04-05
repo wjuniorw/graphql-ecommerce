@@ -1,19 +1,19 @@
 import mongoose from '../connections'
 
-const { Schema } = mongoose
+const { Schema, model } = mongoose
 
-const UserSchema = new Schema({
-  name: String,
-  email: String,
-  role: String,
-  password: { type: String, select: false }
-},
-{
-  timestamps: true,
-})
-
-const User = mongoose.model(
-  'User', UserSchema
+const UserSchema = new Schema(
+  {
+    name: String,
+    email: String,
+    role: String,
+    password: { type: String, select: false },
+  },
+  {
+    timestamps: true,
+  }
 )
+
+const User = model('User', UserSchema)
 
 export default User
