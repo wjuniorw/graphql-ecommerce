@@ -9,16 +9,18 @@ const {
 } = process.env
 
 const MONGO_OPTIONS: ConnectionOptions = {
+  useCreateIndex: true,
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }
 
-const DB_URI = `mongodb://${MONGO_USERNAME}:${encodeURIComponent(MONGO_PASSWORD)}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_DATABASE}`
+const DB_URI = `mongodb://${MONGO_USERNAME}:${encodeURIComponent(
+  MONGO_PASSWORD
+)}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_DATABASE}`
 
 try {
   mongoose.connect(DB_URI, MONGO_OPTIONS)
-}
-catch (e) {
+} catch (e) {
   console.log('<====mongoDB connection error====>', e.message)
 }
 
