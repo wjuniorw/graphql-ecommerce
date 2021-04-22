@@ -2,7 +2,7 @@ import mongoose from '../connections'
 import Paginate from 'mongoose-paginate-v2'
 import { ProductDoc, IProduct, ProductInterface } from './types'
 
-const { Schema } = mongoose
+const { Schema, model } = mongoose
 
 const ProductSchema = new Schema(
   {
@@ -34,14 +34,11 @@ ProductSchema.plugin(Paginate)
 // ProductSchema.index({ '$**': 'text' }, { default_language: 'portuguese' })
 ProductSchema.index(searchable, { default_language: 'portuguese' })
 
-const Product = mongoose.model<ProductDoc, ProductInterface>(
-  'Product',
-  ProductSchema
-)
+const Product = model<ProductDoc, ProductInterface>('Product', ProductSchema)
 
-ProductSchema.statics.createProduct = (product: IProduct) => {
-  // return Product.create(product)
-  return new Product(product)
-}
+ProductSchema.static('createProduct', (product: IProduct) => {
+  return Product.create(product)
+  // return new Product(product)
+})
 
 export default Product

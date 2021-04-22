@@ -2,7 +2,9 @@ import bcrypt from 'bcrypt'
 
 const hashingPass = async (pass: string) => {
   try {
-    const hash = await bcrypt.hash(pass, 11)
+    const salts = Math.floor(Math.random() * 9) + 2
+    const salt = await bcrypt.genSalt(salts)
+    const hash = await bcrypt.hash(pass, salt)
     console.log('hashingPass=====>', hash)
     return hash
   } catch (e) {

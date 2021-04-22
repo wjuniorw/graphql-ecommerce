@@ -1,4 +1,4 @@
-require('dotenv').config()
+if(process.env.NODE_ENV === 'development') require('dotenv').config()
 import { ApolloServer } from 'apollo-server'
 import { makeExecutableSchema } from '@graphql-tools/schema'
 // import { mockServer } from 'graphql-tools'
@@ -24,6 +24,6 @@ const schema = makeExecutableSchema({
 
 const server = new ApolloServer({ context, schema })
 
-server.listen().then(({ url }) => {
+server.listen({ port: process.env.PORT }).then(({ url }) => {
   console.log(`🚀  Server ready at ${url}`)
 })

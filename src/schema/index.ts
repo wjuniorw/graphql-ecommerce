@@ -1,4 +1,4 @@
-import { mergeTypeDefs } from '@graphql-toolkit/schema-merging'
+import { mergeTypeDefs } from '@graphql-tools/merge'
 import Product from './Product'
 import User from './User'
 import Directives from './directives'
